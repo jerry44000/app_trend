@@ -5,11 +5,15 @@ pipeline {
         }
     }
 
+environment {
+    PATH = '/opt/apache-maven-3.9.2/bin:$PATH'
+}
+
     stages {
-        stage('clone code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/jerry44000/app_trend.git'
-            }
+       stage('Build Artifact: Maven') {
+        steps {
+            sh 'mvn clean deploy'
         }
+       }
     }
 }
