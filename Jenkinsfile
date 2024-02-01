@@ -9,7 +9,7 @@ pipeline {
         MAVEN_HOME = '/opt/apache-maven-3.9.6'
     }
     stages {
-        stage('Preparation') {
+        stage('Path env prep') {
             steps {
                 // Utiliser script pour définir PATH ou directement dans les étapes où Maven est requis
                 script {
