@@ -16,7 +16,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>1.8</java.version> <!-- Conservez la version Java 1.8 pour l'instant -->
+        <java.version>17</java.version> <!-- Mettez à jour la version de Java -->
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
     </properties>
 
@@ -29,20 +29,41 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- Dépendances conservées depuis votre version précédente -->
+        
+        <!-- Dépendance github-api -->
         <dependency>
             <groupId>org.kohsuke</groupId>
             <artifactId>github-api</artifactId>
             <version>1.99</version>
         </dependency>
+        
+        <!-- Dépendance twitter4j-core -->
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
             <version>3.0.6</version>
         </dependency>
-        <!-- Ajoutez d'autres dépendances si nécessaire -->
-
+        
+        <!-- Mettez à jour les autres dépendances ici -->
+        
+        <!-- Dépendances pour les tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.2</version> <!-- Mettez à jour la version de JUnit Jupiter -->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.2</version> <!-- Mettez à jour la version de JUnit Jupiter Engine -->
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -51,15 +72,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- Mettez à jour la version du plugin Surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version> <!-- Mettez à jour la version du plugin Surefire -->
+                <version>3.0.0-M5</version>
                 <configuration>
                     <argLine>${argLine} -Xmx2048m</argLine>
                 </configuration>
             </plugin>
-
             <!-- Ajoutez d'autres plugins si nécessaire -->
         </plugins>
     </build>
