@@ -18,10 +18,15 @@ pipeline {
         }
         stage('Build Artifact: Maven') {
             steps {
-                sh 'mvn clean deploy'
+                sh 'mvn clean deploy -Dmaven.test.skip=true'
             }
         }
-        stage('SonarQube analysis') {
+        stage('Unit Tests: Unit & Surefire') {
+            steps {
+                sh 'mvn surefire-report:report'
+            }
+        }
+        stage('SonarQube Analysis: SAST') {
             environment {
                 scannerHome = tool 'sonar-scanner'
             }
