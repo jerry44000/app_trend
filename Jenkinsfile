@@ -76,12 +76,16 @@ pipeline {
         }
         stage('Docker Build & Push') {
             steps {
-                withDockerRegistry([credentialsId: "dockerhub-cred", url:""])
-                    sh 'printenv'
-                    sh 'docker build -t shaykube/app_trend:""$GIT_COMMIT"" .'
-                    sh 'docker push shaykube/app_trend:""$GIT_COMMIT""'
+                script {
+                    withDockerRegistry([credentialsId: "dockerhub-cred", url: ""]) {
+                        sh 'printenv'
+                        sh 'docker build -t shaykube/app_trend:"$GIT_COMMIT" .'
+                        sh 'docker push shaykube/app_trend:"$GIT_COMMIT"'
+                    }
+                }
             }
         }
+
         stage("Docker Build") {
             steps {
                 script {
