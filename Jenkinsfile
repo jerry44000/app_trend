@@ -1,4 +1,6 @@
 def registry = 'https://shai01.jfrog.io'
+def imageName = 'shai01.jfrog.io/shai01-docker-local/app_trend'
+def version = '2.1.2'
 
 pipeline {
     agent {
@@ -33,7 +35,7 @@ pipeline {
                 scannerHome = tool 'sonar-scanner'
             }
             steps {
-                withSonarQubeEnv('sonarqube-server') { 
+                withSonarQubeEnv('sonarqube-server') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
@@ -44,12 +46,12 @@ pipeline {
                     timeout(time: 1, unit: 'HOURS') {
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
-                            error "Pipeline aborted due to Quality Gate failure: ${qg.status}" 
+                            error "Pipeline aborted due to Quality Gate failure: ${qg.status}"
                         }
                     }
                 }
             }
-        }    
+        }
         stage("Jar Publish") {
             steps {
                 script {
@@ -72,6 +74,23 @@ pipeline {
                 }
             }
         }
+        stage("Docker Build") {
+            steps {
+                script {
+                    app = docker.build(imageName + ":" + version)
+                }
+            }
+        }
+        stage("Docker Publish") {
+            steps {
+                script {
+                    docker.withRegistry(registry, 'artifact-cred') {
+                        app.push()
+                    }
+                }
+            }
+        }
     }
 }
+
 
