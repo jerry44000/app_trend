@@ -1,4 +1,4 @@
-def registry = 'https://shai01.jfrog.io/'
+def registry = 'https://shai01.jfrog.io'
 
 pipeline {
     agent {
@@ -53,7 +53,7 @@ pipeline {
         stage("Jar Publish") {
             steps {
                 script {
-                    def server = Artifactory.newServer(url: registry + "/artifactory", credentialsId: "artifact-cred")
+                    def server = Artifactory.newServer(url: "${registry}/artifactory", credentialsId: "artifact-cred")
                     def properties = "buildid=${env.BUILD_ID},commitid=${env.GIT_COMMIT}"
                     def uploadSpec = """{
                         "files": [
