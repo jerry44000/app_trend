@@ -74,35 +74,22 @@ pipeline {
                 }
             }
         }
-        stage('Docker Build & Push') {
+        stage('Docker Operations') {
             steps {
                 script {
-                    withDockerRegistry([credentialsId: "dockerhub-cred", url: ""]) {
-                        sh 'printenv'
-                        sh 'docker build -t shaykube/app_trend:"$GIT_COMMIT" .'
-                        sh 'docker push shaykube/app_trend:"$GIT_COMMIT"'
-                    }
-                }
-            }
-        }
-
-        stage("Docker Build") {
-            steps {
-                script {
-                    app = docker.build(imageName + ":" + version)
-                }
-            }
-        }
-        stage("Docker Publish") {
-            steps {
-                script {
-                    docker.withRegistry(registry, 'artifact-cred') {
-                        app.push()
-                    }
+                    parallel dockerBuildAndPushToDockerHub: {
+                        withDockerRegistry([credentialsId: "dockerhub-cred", url: ""]) {
+                            sh 'docker build -t shaykube/app_trend:"$GIT_COMMIT" .'
+                            sh 'docker push shaykube/app_trend:"$GIT_COMMIT"'
+                        }
+                    }, dockerBuildAndPushToArtifactory: {
+                        def app = docker.build("${imageName}:${version}")
+                        docker.withRegistry(registry, 'artifact-cred') {
+                            app.push()
+                        }
+                    }, failFast: true 
                 }
             }
         }
     }
 }
-
-
