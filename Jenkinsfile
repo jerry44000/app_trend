@@ -73,12 +73,7 @@ pipeline {
                     server.publishBuildInfo(buildInfo)
                 }
             }
-        }
-        // stage('Vulnerability Scan: Trivy') {
-        //     steps {
-        //         sh 'bash trivy-docker-image-scan.sh'
-        //     }
-        // }
+        }       
         stage('Docker Operations') {
             steps {
                 script {
