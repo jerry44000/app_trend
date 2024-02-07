@@ -12,12 +12,12 @@ pipeline {
         MAVEN_HOME = '/opt/apache-maven-3.9.6'
         JAVA_HOME = '/usr/lib/jvm/java-1.17.0-openjdk-amd64'
     }
-    stages {
-        stage('Cleanup') {
-            steps {
-                deleteDir() 
-            }
-        }
+    // stages {
+    //     stage('Cleanup') {
+    //         steps {
+    //             deleteDir() 
+    //         }
+    //     }
         stage('Path env prep') {
             steps {
                 script {
