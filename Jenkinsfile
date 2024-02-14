@@ -74,7 +74,13 @@ pipeline {
                 }
             }
         }  
-            
+        stage('Vulnerability Image Docker Scan: Anchore-Engine') {
+            steps {
+                script {
+                    sh "./dockerfile_scan.sh"
+                }
+            }
+        }
         stage('Docker Operations') {
             steps {
                 script {
