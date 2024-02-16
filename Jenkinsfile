@@ -95,7 +95,7 @@ pipeline {
             steps {
                 script {
                     
-                    sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/:/root/.cache/ aquasec/trivy:latest image --exit-code 1 --no-progress ${imageName}:${version}'
+                    sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/:/root/.cache/ aquasec/trivy:latest image --exit-code 1 --no-progress ${imageName}:${version}"
                 }
             }
         }
