@@ -91,6 +91,13 @@ pipeline {
                 }
             }
         }
+        stage('Prompte to PROD?') {
+            steps {
+                timeout(time: 2, unit: 'DAYS') {
+                input 'Would you like to give your approval for the deployment to the production environment/namespace?'
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
